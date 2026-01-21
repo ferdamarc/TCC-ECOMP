@@ -1,0 +1,609 @@
+% ============================================================================
+% Apresentação de Seminário - TCC UNIFESP
+% Sistema de Agricultura de Precisão para Manejo Hídrico Sustentável
+% ============================================================================
+% Autor: Fernando Daniel Marcelino
+% Orientadora: Profa. Dra. Fernanda Quelho Rossi
+% Data: Dezembro de 2025
+% ============================================================================
+
+\documentclass[aspectratio=169]{beamer}
+% Opções: 169 (16:9), 43 (4:3), 1610 (16:10)
+
+% ============================================================================
+% PACOTES
+% ============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes}
+
+% ============================================================================
+% TEMA E CORES
+% ============================================================================
+\usetheme{Frankfurt} % Berlin, CambridgeUS, Darmstadt, Frankfurt, Madrid, Singapore
+\usecolortheme{structure} % seahorse, dolphin, crane, beaver
+
+% Cores UNIFESP
+\definecolor{unifespblue}{RGB}{0,51,102}
+\definecolor{unifespgreen}{RGB}{0,153,102}
+
+\setbeamercolor{structure}{fg=unifespblue}
+\setbeamercolor{palette primary}{bg=unifespblue,fg=white}
+\setbeamercolor{palette secondary}{bg=unifespgreen,fg=white}
+
+% Remover navegação
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+% ============================================================================
+% INFORMAÇÕES
+% ============================================================================
+\title[Agricultura de Precisão e Manejo Hídrico]{%
+  Sistema de Agricultura de Precisão para o Manejo Sustentável \\
+  de Recursos Hídricos baseado na Fusão de Dados \\
+  de Sensores IoT e Imagens de Satélite
+}
+
+\author[F. D. Marcelino]{%
+  Fernando Daniel Marcelino \\[2mm]
+  {\small Orientadora: Profa. Dra. Fernanda Quelho Rossi}
+}
+
+\institute[UNIFESP]{%
+  Universidade Federal de São Paulo -- UNIFESP \\
+  Instituto de Ciência e Tecnologia \\
+  Bacharelado em Engenharia de Computação \\
+}
+
+\date{8 de Dezembro de 2025}
+
+% Colocando o logo da UNIFESP ao lado direito do título
+% \titlegraphic{%
+%   \includegraphics[width=2.5cm]{figures/logo-unifesp.pdf}
+% }
+
+% ============================================================================
+% INÍCIO DO DOCUMENTO
+% ============================================================================
+\begin{document}
+
+% ----------------------------------------------------------------------------
+% SLIDE DE TÍTULO
+% ----------------------------------------------------------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ----------------------------------------------------------------------------
+% SUMÁRIO
+% ----------------------------------------------------------------------------
+\begin{frame}{Sumário}
+  \tableofcontents
+\end{frame}
+
+% ============================================================================
+% SEÇÃO 1: INTRODUÇÃO
+% ============================================================================
+\section{Introdução}
+
+\begin{frame}{Contexto e motivação}
+  \begin{itemize}
+    \item \textbf{Pressão sobre os recursos hídricos:}
+      \begin{itemize}
+        \item Aumento da \textbf{demanda} global por alimentos
+        \item \textbf{Escassez} e \textbf{distribuição desigual} de água
+        \item \textbf{Impactos ambientais} da agricultura intensiva
+      \end{itemize}
+    \item \textbf{Desafio:} produzir mais com \textbf{menor desperdício de água} e \textbf{menor impacto ambiental}
+    \item \textbf{Alinhamento com a Agenda 2030 da ONU:}
+      \begin{itemize}
+        \item ODS 2 -- Fome Zero e Agricultura Sustentável
+        \item ODS 6 -- Água Potável e Saneamento
+        \item ODS 12 -- Consumo e Produção Responsáveis
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Desafios no manejo hídrico}
+  \begin{itemize}
+    \item Manejo da irrigação muitas vezes baseado em:
+      \begin{itemize}
+        \item \textbf{Experiência empírica} do produtor
+        \item \textbf{Informações dispersas} e \textbf{pouco integradas}
+      \end{itemize}
+    \item \textbf{Riscos associados:}
+      \begin{itemize}
+        \item Superirrigação $\Rightarrow$ \textbf{desperdício de água, energia e fertilizantes}
+        \item Subirrigação $\Rightarrow$ \textbf{estresse hídrico} e \textbf{perda de produtividade}
+      \end{itemize}
+    \item Necessidade de \textbf{ferramentas de apoio à decisão} com visão espaço--temporal do uso de água no talhão
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Tecnologias habilitadoras}
+  \begin{itemize}
+    \item \textbf{Internet das Coisas (IoT):}
+      \begin{itemize}
+        \item Sensores de \textbf{umidade do solo}, \textbf{temperatura/umidade do ar}, \textbf{vazão}, \textbf{pressão}, etc.
+        \item Medições de \textbf{alta frequência temporal} diretamente no campo
+      \end{itemize}
+    \item \textbf{Sensoriamento remoto (SR):}
+      \begin{itemize}
+        \item \textbf{Imagens multiespectrais} (Sentinel-2, Landsat 8/9, HLS) e \textbf{SAR} (Sentinel-1)
+        \item \textbf{Visão} espacialmente \textbf{contínua} da área cultivada
+      \end{itemize}
+    \item \textbf{Aprendizado de máquina:}
+      \begin{itemize}
+        \item Modelos para \textbf{estimar indicadores de estado hídrico}
+        \item Geração de \textbf{mapas de recomendação de irrigação} em \textbf{nível de talhão}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% ============================================================================
+% SEÇÃO 2: DEFINIÇÃO DO PROBLEMA E OBJETIVOS
+% ============================================================================
+\section{Definição do Problema e Objetivos}
+
+\begin{frame}{Lacuna na literatura}
+  \begin{itemize}
+    \item Trabalhos em \textbf{IoT na agricultura}:
+      \begin{itemize}
+        \item Foco em arquiteturas de \textbf{monitoramento e automação} de irrigação
+        \item Ênfase em \textbf{sensores de campo} e lógica de decisão local
+      \end{itemize}
+    \item Trabalhos em \textbf{sensoriamento remoto e aprendizado de máquina}:
+      \begin{itemize}
+        \item Estimativa de \textbf{evapotranspiração}, \textbf{umidade do solo}, \textbf{uso de água} e \textbf{zonas de manejo}
+      \end{itemize}
+    \item Porém:
+      \begin{itemize}
+        \item Poucas propostas descrevem \textbf{arquiteturas completas} que integrem
+              \textbf{séries temporais de sensores IoT e produtos orbitais} em um fluxo operacional
+              para \textbf{apoio à decisão em irrigação}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Definição do problema}
+  \begin{itemize}
+    \item Adoção de IoT e sensoriamento remoto ocorre, em geral, de forma \textbf{fragmentada}
+    \item \textbf{Ausência de metodologias} consolidadas de \textbf{fusão de dados} que conciliem:
+      \begin{itemize}
+        \item \textbf{Alta frequência temporal dos sensores de campo}
+        \item \textbf{Cobertura espacial e multiespectral} das imagens de satélite
+      \end{itemize}
+    
+    \begin{alertblock}{Questão Central}
+      \textbf{Como integrar, de forma sistemática, dados de sensores IoT e imagens de satélite}
+      para \textbf{apoiar decisões de irrigação em agricultura de precisão}, \textbf{reduzindo desperdício de
+      água} e \textbf{aumentando a eficiência produtiva}?
+    \end{alertblock}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Objetivo geral}
+  \begin{block}{Objetivo geral}
+    \textbf{Propor e desenvolver} um \textbf{sistema de agricultura de precisão} focado no \textbf{manejo hídrico
+    sustentável}, baseado na \textbf{fusão de dados de sensores IoT e imagens de satélite}, com o
+    propósito de gerar \textbf{mapas de recomendação de irrigação} mais precisos e eficientes.
+  \end{block}
+  
+%   \vspace{0.4cm}
+  
+%   \begin{itemize}
+%     \item Integração de duas fontes principais de informação:
+%       \begin{itemize}
+%         \item Medições de redes de sensores IoT em campo
+%         \item Dados de sensoriamento remoto orbitais
+%       \end{itemize}
+%     \item Geração de produtos operacionais em nível de talhão
+%   \end{itemize}
+\end{frame}
+
+\begin{frame}{Objetivos específicos (1/2)}
+  \begin{enumerate}
+    \item \textbf{Revisar a literatura} e o estado da arte sobre:
+      \begin{itemize}
+        \item Tecnologias de \textbf{IoT aplicadas à agricultura}
+        \item \textbf{Sensoriamento remoto voltado ao manejo hídrico}
+        \item Técnicas de \textbf{fusão de dados e aprendizado de máquina} em \textbf{agricultura de precisão}
+      \end{itemize}
+    \item \textbf{Definir a arquitetura do sistema}, especificando:
+      \begin{itemize}
+        \item Componentes de \textbf{\emph{hardware} para coleta de dados}
+        \item Plataforma de \textbf{\emph{software} para ingestão e armazenamento}
+      \end{itemize}
+    \item \textbf{Estabelecer a metodologia para aquisição e processamento de imagens orbitais}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Objetivos específicos (2/2)}
+  \begin{enumerate}
+    \setcounter{enumi}{3}
+    \item \textbf{Desenvolver um modelo de \emph{machine learning}} para realizar a fusão dos dados,
+          \textbf{correlacionando medições pontuais} e de alta frequência (IoT) \textbf{com dados espaciais} e
+          de menor frequência (satélite)
+    \item Implementar um \textbf{protótipo de sistema} que utilize o modelo de fusão para gerar:
+      \begin{itemize}
+        \item \textbf{Mapas}
+        \item \textbf{Relatórios de irrigação}
+        \item \textbf{Dashboards de recomendação e alerta sobre a irrigação}
+      \end{itemize}
+    \item \textbf{Analisar a eficácia} potencial do sistema na \textbf{redução do desperdício de água} e no
+          \textbf{aumento da eficiência produtiva}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Solução Proposta}
+  \begin{center}
+    \begin{tikzpicture}[
+      node distance=1.0cm,
+      box/.style={rectangle, draw, rounded corners, minimum width=1.6cm, minimum height=0.85cm, align=center, font=\scriptsize},
+      arrow/.style={-Stealth, thick}
+    ]
+      % Linha superior: Fontes → ETL → Fusão
+      \node[box, fill=blue!20] (iot) {Sensores IoT \\ \tiny (Alta freq.)};
+      \node[box, fill=green!20, above=0.5cm of iot] (sat) {Satélites \\ \tiny (Cobertura esp.)};
+      
+      \node[box, right=1.2cm of iot, yshift=0.25cm, fill=cyan!20] (etl) {ETL \\ \tiny (Limpeza/Transform.)};
+      
+      \node[box, right=1.2cm of etl, fill=yellow!20] (fusion) {Fusão \\ \tiny (Feature-level)};
+      
+      % Linha inferior: ML → Produtos
+      \node[box, below=1.0cm of fusion, xshift=0.6cm, fill=orange!20] (ml) {ML \\ \tiny (Regressão/Classif.)};
+      
+      \node[box, right=1.2cm of ml, fill=red!20] (output) {Produtos \\ \tiny (Mapas/Dashboards)};
+      
+      % Setas
+      \draw[arrow] (iot) -- (etl);
+      \draw[arrow] (sat) -- (etl);
+      \draw[arrow] (etl) -- (fusion);
+      \draw[arrow] (fusion) -- (ml);
+      \draw[arrow] (ml) -- (output);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+% ============================================================================
+% SEÇÃO 3: MÉTODOS
+% ============================================================================
+\section{Materiais e Métodos}
+
+\begin{frame}{Visão geral da abordagem}
+  \begin{itemize}
+    \item Dois caminhos complementares de obtenção de dados:
+      \begin{itemize}
+        \item \textbf{Caminho A ---} \textbf{uso de \emph{datasets} existentes}
+        \item \textbf{Caminho B ---} \textbf{coleta em campo com rede própria baseada em LoRaWAN}
+      \end{itemize}
+    \item Etapas principais:
+      \begin{enumerate}
+        \item Gate de decisão (\textbf{Caminho A vs. B})
+        \item \textbf{Delineamento experimental}
+        \item \textbf{Aquisição de dados} (IoT + SR)
+        \item \textbf{Fusão espaço--temporal}
+        \item \textbf{Modelagem e geração de produtos}
+        \item \textbf{Validação e análise de desempenho}
+      \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Materiais: dados (Caminho A)}
+  \begin{itemize}
+    \item \textbf{Caminho A --- Dataset existente}
+      \begin{itemize}
+        \item \textbf{Séries históricas} e/ou \textbf{\emph{datasets}} acadêmicos com \textbf{variáveis de solo/umidade}
+              e apoio meteorológico [1][2][3]
+        \\{\scriptsize (Bônus: uso de dados meteorológicos de estações locais próximas)}
+        \item Sensoriamento remoto: \textbf{Sentinel-2 (MSI), Landsat-8/9 (OLI/TIRS) e Sentinel-1 (SAR)}
+        \\{\scriptsize (Bônus: uso de dados vetoriais para auxílio no limite de talhão, rede de drenagem, solos e corpos d'água)}
+      \end{itemize}
+    \item \textbf{Critérios de escolha:}
+      \begin{itemize}
+        \item \textbf{Cobertura temporal e espacial}
+        \item \textbf{Qualidade das variáveis disponíveis}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Materiais: coleta em campo (Caminho B)}
+  \begin{itemize}
+    \item \textbf{Caminho B --- Rede própria em 1--2 talhões}
+      \begin{itemize}
+        \item Medições de \textbf{umidade do solo}
+        \item \textbf{Temperatura e umidade relativa do ar}
+        \item \textbf{Registros de validação manual} (checklist de campo; amostras pontuais)
+      \end{itemize}
+    \item \textbf{\emph{Hardware} e comunicação:}
+      \begin{itemize}
+        \item Microcontrolador \textbf{ESP32 com suporte a LoRa}
+        \item \emph{Gateway} LoRaWAN (TTN/ChirpStack) ou Raspberry Pi com módulo LoRa
+        \item \textbf{Sensores capacitivos/tensiométricos de umidade, sensores de T/UR do ar}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Materiais: \emph{software} e organização dos dados}
+  \begin{itemize}
+    \item \textbf{\emph{Software} e serviços:}
+      \begin{itemize}
+        \item \emph{Ambiente Python} (venv/conda)
+        \item \textbf{Bibliotecas:} GDAL/\textbf{rasterio}, SNAP/Sen2Cor, \textbf{Google Earth Engine}
+        \item \textbf{Telemetria:} The Things Stack/TTN, \textbf{MQTT/HTTP}, \emph{scripts} de ingestão
+        \item Ciência de dados e visualização: \texttt{numpy}, \texttt{pandas}, \texttt{scikit-learn}, QGIS, Dash/Streamlit
+      \end{itemize}
+    \item \textbf{Organização e gestão de dados:}
+      \begin{itemize}
+        \item Estrutura de pastas: \texttt{raw/}, \texttt{interim/}, \texttt{processed/}, \texttt{models/}, \texttt{reports/}
+        \item \textbf{Metadados} (CSV/Parquet): sensor, lat, lon, data/hora local, DOY, QA \emph{flags}, CRS
+        \item Controle de \textbf{versionamento}: \textbf{Git/GitHub}
+        \\{\scriptsize (Bônus: o uso do \emph{Data Version Control} (DVC) para grandes volumes de dados)}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\emph{Gate} de decisão e delineamento experimental}
+  \begin{itemize}
+    \item \textbf{\emph{Gate} de decisão (Mês 1--2):}
+      \begin{enumerate}
+        \item \textbf{Verificar} disponibilidade e suficiência de \textbf{\emph{datasets} existentes}
+        \item \textbf{Se suficientes: adotar Caminho A} para \textbf{acelerar modelagem}
+        \item \textbf{Caso contrário: utilizar Caminho B} com \textbf{coleta em campo via LoRaWAN}
+      \end{enumerate}
+    \item \textbf{Delineamento experimental:}
+      \begin{itemize}
+        \item \textbf{Definir cultura, talhões e variáveis de interesse}
+        \item \textbf{Planejar janelas de aquisição (solo, clima, SR)}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Aquisição de dados e sensoriamento remoto}
+  \begin{itemize}
+    \item \textbf{Aquisição (IoT + meteorologia):}
+      \begin{itemize}
+        \item \textbf{Leituras de sensores} em alta frequência
+        \item \textbf{Agregação em janelas de 15--60 minutos} para modelagem
+      \end{itemize}
+    \item \textbf{Sensoriamento remoto (comum aos caminhos A e B):}
+      \begin{itemize}
+        \item \textbf{Critérios: nuvem $<$ X\%}, \textbf{coleções L2A} (Sentinel-2) / \textbf{C2} (Landsat 8/9)
+        \item \textbf{Óptico}: \textbf{correção atmosférica} (Sen2Cor), \textbf{máscara de nuvem/sombra}, \textbf{recorte ao talhão}
+        \item \textbf{SAR}: \textbf{calibração radiométrica}, \textbf{correção de terreno}, \textbf{co-registro S1$\leftrightarrow$S2}
+        \item \textbf{Derivação de índices}: \textbf{NDWI/MNDWI} (água), NDVI/NDMI (vigor/umidade), LST/ET quando aplicável [4]
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Fusão espaço--temporal, modelagem e produtos}
+  \begin{itemize}
+    \item \textbf{Fusão espaço--temporal:}
+      \begin{itemize}
+        \item \textbf{Alinhamento temporal/espacial}
+        \item \textbf{Uso de \emph{Harmonized Landsat Sentinel-2} (HLS)} e composições para \textbf{reduzir lacunas de nuvem}
+        \item Níveis de fusão:
+          \begin{itemize}
+            \item \textbf{\emph{Sensor-level:}} reamostragem/\textbf{registro} $\leftrightarrow$ pontos/\textbf{talhões}
+            \item \textbf{\emph{Feature-level:}} \emph{feature set} com \textbf{índices SR + agregados IoT + clima}
+          \end{itemize}
+      \end{itemize}
+    \item \textbf{Modelagem e produtos:}
+      \begin{itemize}
+        \item \textbf{Baselines:} \textbf{regressão} (umidade/ET) e \textbf{classificação} (água/estresse)
+        \item \textbf{Produtos:} \textbf{GeoTIFF}/COG, camadas temáticas, \textbf{mapas de recomendação de irrigação}, \textbf{dashboards} e \textbf{relatórios de alerta}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Validação}
+  \begin{itemize}
+    \item \textbf{Esquema espaço--temporal:} \textbf{treino/validação/teste por talhão/tempo}
+    \item \textbf{Métricas:} \emph{Root Mean Square Error} (RMSE)/\emph{Mean Absolute Error} (MAE) (variáveis contínuas), F1--\emph{Score}/\emph{Intersection over Union} (IoU) (segmentação água/estresse)
+    \item \textbf{Ganho operacional:} \textbf{economia potencial de água}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Cronograma de atividades}
+  \begin{columns}[T]
+    % Coluna esquerda: Tabela
+    \begin{column}{0.48\textwidth}
+      \begin{table}
+        \centering
+        \scriptsize
+        \begin{tabular}{cl}
+          \toprule
+          \textbf{Mês} & \textbf{Atividade} \\
+          \midrule
+          \textbf{M1--M2} & \textbf{\emph{Gate} de decisão} (A vs. B) \\
+                 & Instalação/calibração (se B) \\
+          \midrule
+          \textbf{M2--M4} & \textbf{Coleta IoT contínua (se B)} \\
+                 & Aquisição + pré-proc. SR \\
+          \midrule
+          \textbf{M4--M5} & \textbf{Fusão de dados} \\
+                 & \textbf{Modelagem \emph{baseline}} \\
+          \midrule
+          \textbf{M5--M6} & \textbf{Validação e ajustes} \\
+                 & \textbf{Geração de produtos} \\
+                 & \textbf{Escrita Final do TCC} \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+    \end{column}
+    
+    % Coluna direita: Fluxograma
+    \begin{column}{0.48\textwidth}
+      \begin{center}
+        \begin{tikzpicture}[
+          node distance=0.6cm and 0.8cm,
+          phase/.style={rectangle, draw, fill=blue!20, rounded corners, minimum width=2cm, minimum height=0.6cm, align=center, font=\tiny},
+          decision/.style={diamond, draw, fill=yellow!30, minimum width=1.8cm, minimum height=1.2cm, align=center, font=\tiny, aspect=2},
+          arrow/.style={-Stealth, thick},
+          label/.style={font=\tiny, midway, above}
+        ]
+          % M1-M2: Gate de decisão
+          \node[phase] (start) {M1--M2 \\ Análise};
+          \node[decision, below=0.5cm of start] (gate) {Dataset \\ suficiente?};
+          
+          % Caminho A (esquerda)
+          \node[phase, below left=0.8cm and 0.5cm of gate, fill=green!20] (pathA) {M2--M4 \\ Caminho A \\ (Dataset)};
+          
+          % Caminho B (direita)
+          \node[phase, below right=0.8cm and 0.5cm of gate, fill=blue!30] (pathB) {M2--M4 \\ Caminho B \\ (IoT)};
+          
+          % Convergência
+          \node[phase, below=1.2cm of gate, fill=cyan!20] (merge) {M4--M5 \\ Fusão + ML};
+          \node[phase, below=0.5cm of merge, fill=orange!20] (final) {M5--M6 \\ Valid. + TCC};
+          
+          % Setas
+          \draw[arrow] (start) -- (gate);
+          \draw[arrow] (gate) -| node[label, pos=0.2] {Sim} (pathA);
+          \draw[arrow] (gate) -| node[label, pos=0.2] {Não} (pathB);
+          \draw[arrow] (pathA) |- (merge);
+          \draw[arrow] (pathB) |- (merge);
+          \draw[arrow] (merge) -- (final);
+        \end{tikzpicture}
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ============================================================================
+% SEÇÃO 4: RESULTADOS
+% ============================================================================
+\section{Resultados}
+
+\begin{frame}{Situação atual do projeto}
+  \begin{itemize}
+    \item Capítulos de \textbf{Introdução}, \textbf{Fundamentação Teórica} e \textbf{Desenvolvimento} já estruturados
+    \item Etapas concluídas/adiantadas:
+      \begin{itemize}
+        \item \textbf{Revisão bibliográfica} (IoT, SR, fusão de dados, ML)
+        \item \textbf{Definição de objetivos} e \textbf{arquitetura em camadas}
+        \item \textbf{Planejamento dos caminhos} A e B
+        \item \textbf{Estruturação do ambiente} de dados e da organização de pastas
+      \end{itemize}
+    \item Principais aprendizados:
+      \begin{itemize}
+        \item \textbf{Desafios de integração} de fontes \textbf{heterogêneas}
+        \item \textbf{Gestão e versionamento} de grandes volumes de dados
+        \item \textbf{Modelagem de aprendizado de máquina} com \textbf{dados espaço--temporais}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Resultados esperados e métricas}
+  \begin{itemize}
+    \item \textbf{Resultados esperados:}
+      \begin{itemize}
+        \item \textbf{\emph{Dataset} integrado} IoT + satélite em nível de talhão
+        \item \textbf{Mapas de recomendação de irrigação} por período/safra
+        \item \textbf{Protótipo de interface visual} com mapas, séries temporais e alertas
+      \end{itemize}
+    \item \textbf{Métricas de avaliação:}
+      \begin{itemize}
+        \item \textbf{RMSE/MAE} para variáveis contínuas (umidade, ET, etc.)
+        \item \textbf{F1/IoU} para classes de água/estresse, quando aplicável
+        \item \textbf{Indicadores de \emph{gain} operacional} (economia potencial de água)
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% ============================================================================
+% SEÇÃO 5: CONCLUSÕES E TRABALHOS FUTUROS
+% ============================================================================
+\section{Conclusões e Trabalhos Futuros}
+
+\begin{frame}{Contribuições do trabalho}
+  \begin{itemize}
+    \item Organização de \textbf{boas práticas de projeto de dados} para fusão IoT--satélite
+    \item Proposição de \textbf{arquitetura em camadas} para manejo hídrico sustentável:
+      \begin{itemize}
+        \item \textbf{Aquisição}, \textbf{transmissão}, \textbf{armazenamento} e \textbf{tratamento} de dados
+      \end{itemize}
+    \item Documentação de \textbf{metodologia de fusão IoT--sensoriamento remoto}
+    \item Base estruturada para desenvolvimentos futuros em:
+      \begin{itemize}
+        \item \textbf{Irrigação inteligente}
+        \item \textbf{Agricultura de precisão sustentável}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Limitações e desafios}
+  \begin{itemize}
+    \item Dependência da \textbf{qualidade e disponibilidade dos dados}:
+      \begin{itemize}
+        \item Cobertura de nuvens em imagens orbitais
+        \item \textbf{Falhas de sensores} ou de \textbf{comunicação}
+      \end{itemize}
+    \item Questões de \textbf{escalabilidade}:
+      \begin{itemize}
+        \item \textbf{Generalização para diferentes culturas e regiões}
+      \end{itemize}
+    \item Complexidade de operação:
+      \begin{itemize}
+        \item Necessidade de \textbf{conhecimentos em geoprocessamento}, \textbf{programação} e \textbf{ciência e análise de dados}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Trabalhos futuros}
+  \begin{itemize}
+    \item \textbf{Implantar e avaliar a rede IoT em área piloto (Caminho B)}
+    \item \textbf{Explorar diferentes modelos} de \emph{machine learning} e comparar desempenho
+    \item Incorporar \textbf{novas fontes de dados}:
+      \begin{itemize}
+        \item \textbf{Sensores adicionais} (tensiômetros, estações meteorológicas completas)
+        \item \textbf{Séries temporais mais longas} de satélite e dados climáticos
+      \end{itemize}
+    \item \textbf{Evoluir a interface} para um \textbf{dashboard operacional} utilizável por técnicos e produtores
+    \item \textbf{Realizar validação operacional} em parceria com produtores e instituições
+  \end{itemize}
+\end{frame}
+
+% ============================================================================
+% REFERÊNCIAS
+% ============================================================================
+\begin{frame}{Referências}
+  \begin{thebibliography}{99}
+    \bibitem{1} Bhadra, M. (2024). Agriculture and Farming Dataset. Kaggle. 
+    \url{www.kaggle.com/datasets/bhadramohit/agriculture-and-farming-dataset}
+    
+    \bibitem{2} Kaggle Community. (2023). Agricultural Datasets Discussion. Kaggle Discussions.
+    \url{www.kaggle.com/discussions/general/446746}
+    
+    \bibitem{3} DatasetEngineer. (2024). Smart Farming Data 2024 (SF24). Kaggle.
+    \url{www.kaggle.com/datasets/datasetengineer/smart-farming-data-2024-sf24}
+
+    \bibitem{4} The IDB-Project. (2011). A database for remote sensing indices.
+    \url{www.indexdatabase.de/db/i.php}
+  \end{thebibliography}
+\end{frame}
+
+% ============================================================================
+% SLIDE FINAL
+% ============================================================================
+\begin{frame}{Agradecimentos e contato}
+  \begin{center}
+    \Large Obrigado pela atenção! \\[5mm]
+    \normalsize
+    \textbf{Fernando Daniel Marcelino} \\[2mm]
+    \href{mailto:fernando.marcelino@unifesp.br}{fernando.marcelino@unifesp.br} \\[3mm]
+    \vspace{0.4cm}
+    \includegraphics[width=0.25\textwidth]{figures/logo-unifesp.pdf} \\[3mm]
+    \small
+    Repositório do projeto: \\
+    \href{https://github.com/fernando-daniel98/TCC-UNIFESP}{github.com/fernando-daniel98/TCC-UNIFESP}
+  \end{center}
+\end{frame}
+
+\end{document}
